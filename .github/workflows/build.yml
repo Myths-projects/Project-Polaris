@@ -1,0 +1,26 @@
+name: Build Project Polaris
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: devkitpro/devkitarm:latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: make
+
+      - name: Upload NDS
+        uses: actions/upload-artifact@v4
+        with:
+          name: Polaris
+          path: "*.nds"
